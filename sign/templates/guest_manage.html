@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <title>Guest Manage</title>
+</head>
+<body>
+<!--导航栏-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/sign/event_manage/">Guest Manage System</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/sign/event_manage/">发布会</a> </li>
+                <li class="active"><a href="#">嘉宾</a> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">{{ user }}</a> </li>
+                <li><a href="/sign/logout/">退出</a> </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--嘉宾列表-->
+<div class="row"style="padding-top: 80px;">
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>id</th><th>名称</th><th>手机</th><th>Email</th><th>签到</th><th>发布会</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guest in guests %}
+                <tr>
+                    <th>{{ guest.event_id }}</th>
+                    <th>{{ guest.realname }}</th>
+                    <th>{{ guest.phone }}</th>
+                    <th>{{ guest.email }}</th>
+                    <th>{{ guest.sign }}</th>
+                    <th>{{ guest.event }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
