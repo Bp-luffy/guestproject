@@ -41,7 +41,7 @@
     <div class="col-md-6">
         <table class="table table-striped">
             <thead>
-                <tr><th>id</th><th>名称</th><th>状态</th><th>地址</th><th>时间</th></tr>
+                <tr><th>id</th><th>名称</th><th>状态</th><th>地址</th><th>时间</th><th>签到</th></tr>
             </thead>
             <tbody>
                 {% for event in events %}
@@ -51,11 +51,26 @@
                     <th>{{ event.status }}</th>
                     <th>{{ event.address }}</th>
                     <th>{{ event.start_time }}</th>
+                    <th><a href="/sign/sign_index/{{ event.event_id }}" target="{{ event.event_id }}_blank">sign</a></th>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+</div>
+<!--分页器-->
+<div class="pagination">
+    <span class="step-links">
+        {% if events.has_previous %}
+        <a href="?page={{ events.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ events.number }} of {{ events.paginator.num_pages }}.
+        </span>
+        {% if events.has_next %}
+            <a href="?page={{ events.next_page_number }}">next</a>
+        {% endif %}
+    </span>
 </div>
 {% csrf_token %}
 </body>

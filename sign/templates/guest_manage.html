@@ -25,8 +25,18 @@
         </div>
     </div>
 </nav>
+<!--发布会搜索表单-->
+<div class="page-header" style="padding-top: 1.5%;">
+    <div id="navbar" class="navbar-collapse collapse" ></div>
+    <form class="navbar-form" method="get" action="sign/search_name/">
+        <div class="form-group">
+            <input name="name" type="text" placeholder="名称" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+</div>
 <!--嘉宾列表-->
-<div class="row"style="padding-top: 80px;">
+<div class="row"style="padding-top: 0%;">
     <div class="col-md-6">
         <table class="table table-striped">
             <thead>
@@ -50,7 +60,7 @@
     </div>
 </div>
 <!--列表分页器-->
-<div class="paginator">
+<div class="pagination">
     <span class="step-links">
         {% if guests.has_previous %}
         <a href="?page={{ guests.previous_page_number }}">previous</a>

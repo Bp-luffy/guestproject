@@ -13,14 +13,14 @@ try:
     with conn.cursor() as cursor:
         #创建嘉宾数据
         sql='Insert Into sign_guest(realname,phone,email,sign,event_id,create_time) ' \
-            'values ("tom",18883282817,"tom@mail.com",0,1,NOW());'
+            'values ("tom9",18800001119,"tom9@mail.com",0,9,NOW());'
         cursor.execute(sql)
         conn.commit()
 
     with conn.cursor() as cursor:
         # 查询添加的嘉宾
         sql = "SELECT realname,phone,email,sign from sign_guest WHERE phone=%s"
-        cursor.execute(sql, ('18883281111',))
+        cursor.execute(sql, ('18800001112',))
         result = cursor.fetchall()
         print(result)
 finally:

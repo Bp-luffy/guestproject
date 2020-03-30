@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib import auth
 from sign.models import Event,Guest
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.shortcuts import render,get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -32,7 +33,17 @@ def event_manage(request):
     event_list=Event.objects.all()
     #username=request.COOKIES.get('user','') #读取浏览器cookie
     username=request.session.get('user','') #读取浏览器session
-    return render(request,'event_manage.html',{'user':username,'events':event_list})
+    pageinator=Paginator(event_list,3)
+    page=request.GET.get('page')
+    try:
+        contacts=pageinator.page(page)
+    except PageNotAnInteger:
+        #如果page不是整数，取第一页面数据
+        contacts=pageinator.page(1)
+    except EmptyPage:
+        #如果page不在范围内，取最后一页
+        contacts=pageinator.page(pageinator.num_pages)
+    return render(request,'event_manage.html',{'user':username,'events':contacts})
 
 #发布会名称搜索
 @login_required
@@ -47,7 +58,7 @@ def search_name(request):
 def guest_manage(request):
     username=request.session.get('user','')
     guest_list=Guest.objects.all()
-    paginator=Paginator(guest_list,2)
+    paginator=Paginator(guest_list,3)
     page=request.GET.get('page')
     try:
         contacts=paginator.page(page)
@@ -57,4 +68,10 @@ def guest_manage(request):
     except EmptyPage:
         #如果page不在范围内，取最后一页面
         contacts=paginator.page(paginator.num_pages)
-    return render(request,"guest_manage.html",{"user":username,"guests":guest_list})
+    return render(request,"guest_manage.html",{"user":username,"guests":contacts})
+
+#签到页面
+@login_required
+def sign_index(request,eid):
+    event=get_object_or_404(Event,id=eid)
+    return render(request,'sign_index.html',{'event':event})
