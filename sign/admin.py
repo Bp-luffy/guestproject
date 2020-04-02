@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sign.models import Event,Guest
+from sign.models.usermodels import Event,Guest
 
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):

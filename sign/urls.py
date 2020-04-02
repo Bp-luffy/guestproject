@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from .models import *
-from sign import views
+from sign.models.usermodels import *
+from sign.views import views
 
 
 urlpatterns = [
