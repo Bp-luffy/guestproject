@@ -1,11 +1,10 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse,HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.contrib import auth
-from sign.models.usermodels import Event,Guest
+from sign.models.createTables import Event,Guest
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.shortcuts import render,get_object_or_404
+from sign.models.getDataBySql import getdatanbysql
 
 # Create your views here.
 def index(request):
@@ -30,7 +29,7 @@ def login_action(request):
 #发布会管理
 @login_required
 def event_manage(request):
-    event_list=Event.objects.all()
+    event_list=getdatanbysql().getdata()
     #username=request.COOKIES.get('user','') #读取浏览器cookie
     username=request.session.get('user','') #读取浏览器session
     pageinator=Paginator(event_list,3)

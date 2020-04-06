@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from sign.models.usermodels import *
 from sign.views import views
 
 
