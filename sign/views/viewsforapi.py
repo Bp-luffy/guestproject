@@ -86,15 +86,19 @@ def add_guest(request):
     result = Event.objects.get(event_id=eid).status
     if not result:
         return JsonResponse({'status': 10023, 'message': 'event status is not avaliable'})
+    result=Guest.objects.filter(phone=phone)
+    if result:
+        return JsonResponse({'status':10024,'message':'guest has add'})
     event_limit = Event.objects.get(event_id=eid).limit  # 发布会限制人数
     guest_limit = Event.objects.filter(event_id=eid)  # 发布会已添加的嘉宾数
     if len(guest_limit) >= event_limit:
         return JsonResponse({'status': 10024, 'message': 'event number is full'})
+    #从数据库取时间并转换为时间戳
     event_time = Event.objects.get(event_id=eid).start_time  # 发布会时间
-    etime = str(event_time).split('.')[0]
-    timeArray = time.strptime(etime, '%y-%m-%d %H:%M:%S')
+    etime = str(event_time).split('+')[0]
+    timeArray = time.strptime(etime, '%Y-%m-%d %H:%M:%S')
     e_time = int(time.mktime(timeArray))
-
+    #获取当前时间，并转换为时间戳
     now_time = str(time.time())  # 当前时间
     n_time = int(now_time.split('.')[0])
 
@@ -157,7 +161,7 @@ def user_sign(request):
 
     event_time=Event.objects.get(event_id=eid).start_time
     etime=str(event_time).split('.')[0]
-    timeArray=time.strptime(etime,'yyyy-mm-dd HH:MM:SS')
+    timeArray=time.strptime(etime,'%Y-%m-%d %H:%M:%S')
     e_time=int(time.mktime(timeArray))
 
     now_time=str(time.time())
